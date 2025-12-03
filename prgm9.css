@@ -1,0 +1,31 @@
+p { 
+ font-size: 16px;  
+} 
+ ul {  
+font-size: 16px; 
+ }  
+#animatedDiv {   width: 100px; 
+ height: 100px; 
+ background-color: lightblue;  margin-top: 20px; 
+ } 
+ 
+.animated {  
+background-color: lightcoral;  
+} 
+ 
+jQuery (script.js) 
+$(document).ready(function()  
+{  
+
+$('#appendContent').click(function() { 
+ $('#paragraph').append(' This content has been appended.');  
+$('#list').append('<li>New Item</li>');  
+}); 
+ 
+ $('#animateDiv').click(function() {  $('#animatedDiv').animate({ 
+ width: '200px',  height: '200px'  },1000, function() {  
+
+
+ });  
+});  
+}); 
