@@ -1,0 +1,80 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>AJAX Example</title> 
+ <link rel="stylesheet" href="styles.css">  
+</head> 
+ <body> 
+ <h1>AJAX Example</h1>  
+<div id="content">  
+<p id="plainTextContent">Plain AJAX Content will appear here.</p> 
+ <p id="jqueryTextContent">jQuery AJAX Content will appear here.</p> 
+ <p id="jsonContent">JSON Content will appear here.</p> 
+ </div> <button id="loadPlainText">Load Plain Text via AJAX</button> 
+ <button id="loadJQueryText">Load jQuery Text via AJAX</button> 
+ <button id="loadJSON">Load JSON Data</button>  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"> 
+</script>  
+<script src="script.js"> 
+</script> 
+</body> 
+ </html> 
+ 
+ 
+CSS (styles.css) 
+
+ #content p {  font-size: 16px;  
+margin: 10px 0; 
+ }  
+button {  margin: 5px;  
+padding: 10px; 
+ } 
+ 
+Plain JavaScript (script.js) 
+document.addEventListener('DOMContentLoaded', function() { 
+ 
+document.getElementById('loadPlainText') 
+.addEventListener('click', function() {  var xhr = new XMLHttpRequest();  xhr.open('GET', 'textfile.txt', true);  xhr.onload = function() { 
+ if (xhr.status === 200) {  document.getElementById('plainTextContent').textContent = xhr.responseText;  
+}  else { document.getElementById('plainTextContent').textContent = 'Error loading text.';  }  };  xhr.send(); 
+ });  
+ 
+document.getElementById('loadJSON').addEventListener('click', function() {  
+$.getJSON('data.json', function(data) { 
+ var content = '<ul>';  data.forEach(function(item) {  
+content += '<li>' + item.name + ': ' + item.value + '</li>'; });  content += '</ul>'; 
+ document.getElementById('jsonContent').innerHTML = content; }) 
+.fail(function() { 
+ document.getElementById('jsonContent').textContent = 'Error loading JSON.';  
+});  
+});  }); 
+jQuery (script.js) 
+Here's how you can use jQuery for AJAX requests: 
+$(document).ready(function() { 
+   
+    $('#loadJQueryText').click(function() { 
+        $.ajax({             url: 'textfile.txt',             method: 'GET', 
+            success: function(data) { 
+                $('#jqueryTextContent').text(data); 
+            }, 
+            error: function() { 
+                $('#jqueryTextContent').text('Error loading text.'); 
+            } 
+        }); 
+    }); 
+ 
+   
+    $('#loadJSON').click(function() {         $.getJSON('data.json', function(data) { 
+            var content = '<ul>';             data.forEach(function(item) { 
+                content += '<li>' + item.name + ': ' + item.value + '</li>'; 
+            }); 
+            content += '</ul>'; 
+            $('#jsonContent').html(content); 
+        }).fail(function() { 
+            $('#jsonContent').text('Error loading JSON.'); 
+        }); 
+    }); 
+}); 
+ 
